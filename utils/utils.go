@@ -31,7 +31,11 @@ func sliceToInt(stringSlice []string) []int {
 
 func ReadFileAsInts(file string) ([]int, error) {
 
-	stringSlice, err := fileToSlice("input/day1.txt")
-
+	stringSlice, err := fileToSlice(file)
 	return sliceToInt(stringSlice), err
+}
+
+func ReadFileAsStrings(file string) ([]string, error) {
+
+	return fileToSlice(file)
 }

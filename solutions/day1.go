@@ -1,11 +1,11 @@
-package day1
+package solutions
 
 import (
 	utils "adventofcode/utils"
 	"strconv"
 )
 
-func Solve() string {
+func SolveDay1() string {
 
 	sum := 2020
 	inputs, _ := utils.ReadFileAsInts("input/day1.txt")
