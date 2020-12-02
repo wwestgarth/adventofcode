@@ -28,13 +28,17 @@ func main() {
 
 	opts := getOpts()
 
-	res := ""
+	part1 := ""
+	part2 := ""
+
 	if *opts.day == 1 {
-		res = day1.SolveDay1()
+		part1, part2 = day1.SolveDay1()
 	}
 	if *opts.day == 2 {
-		res = day2.SolveDay2()
+		part1, part2 = day2.SolveDay2()
 	}
-	fmt.Println("Solution:", res)
+	fmt.Println("Solutions")
+	fmt.Println("Part1: ", part1)
+	fmt.Println("Part2: ", part2)
 
 }
