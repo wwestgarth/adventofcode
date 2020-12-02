@@ -2,7 +2,6 @@ package solutions
 
 import (
 	utils "adventofcode/utils"
-	"strconv"
 	"strings"
 )
 
@@ -12,13 +11,13 @@ type PolicyData struct {
 	password  string
 }
 
-func (data *PolicyData) part1Valid() bool {
+func (data *PolicyData) validPolicy1() bool {
 
 	count := strings.Count(data.password, data.character)
 	return count >= data.bound(0) && count <= data.bound(1)
 }
 
-func (data *PolicyData) part2Valid() bool {
+func (data *PolicyData) validPolicy2() bool {
 	l, u := data.AtIndices()
 
 	return (l == data.character) != (u == data.character)
@@ -28,7 +27,6 @@ func (data *PolicyData) part2Valid() bool {
 func (data *PolicyData) AtIndices() (lower, upper string) {
 	indexL := data.bound(0) - 1
 	indexU := data.bound(1) - 1
-	lower, upper = "", ""
 
 	if indexL < len(data.password) {
 		lower = data.password[indexL : indexL+1]
@@ -44,15 +42,14 @@ func (data *PolicyData) bound(i int) int {
 	return data.bounds[i]
 }
 
-func NewPolicyData(input string) PolicyData {
-
-	var data PolicyData
+func NewPolicyData(input string) (data PolicyData) {
 
 	splitInput := strings.Fields(input)
 	splitBound := strings.Split(splitInput[0], "-")
 
-	data.bounds[0], _ = strconv.Atoi(splitBound[0])
-	data.bounds[1], _ = strconv.Atoi(splitBound[1])
+	data.bounds[0] = utils.AtoiPanic(splitBound[0])
+	data.bounds[1] = utils.AtoiPanic(splitBound[1])
+
 	data.character = splitInput[1][:1]
 	data.password = splitInput[2]
 
@@ -60,37 +57,33 @@ func NewPolicyData(input string) PolicyData {
 
 }
 
-func transformInput2() ([]string, error) {
+func fileAsPolicyData() (policyData []PolicyData) {
 
-	return utils.ReadFileAsStrings("input/day2.txt")
-}
-
-func transformOutput2(value1, value2 int, err error) (part1Result, part2Result string) {
-
-	if err != nil {
-		return "", ""
-	}
-
-	return strconv.Itoa(value1), strconv.Itoa(value2)
-}
-
-func SolveDay2() (string, string) {
-
-	inputs, err := transformInput2()
-	part1Valids := 0
-	part2Valids := 0
+	inputs := utils.FileAsLines("input/day2.txt")
 
 	for _, input := range inputs {
+		policyData = append(policyData, NewPolicyData(input))
+	}
 
-		data := NewPolicyData(input)
+	return
+}
 
-		if !data.part1Valid() {
-			part1Valids += 1
+func SolveDay2() (part1, part2 string) {
+
+	policyData := fileAsPolicyData()
+
+	validPolicy1 := 0
+	invalidPolicy2 := len(policyData)
+
+	for _, data := range policyData {
+
+		if !data.validPolicy1() {
+			validPolicy1 += 1
 		}
-		if !data.part2Valid() {
-			part2Valids += 1
+		if !data.validPolicy2() {
+			invalidPolicy2 -= 1
 		}
 	}
 
-	return transformOutput2(part1Valids, len(inputs)-part2Valids, err)
+	return utils.ResultStrings(validPolicy1, invalidPolicy2)
 }

@@ -15,7 +15,7 @@ func getOpts() options {
 
 	var opts options
 
-	// Functional choices
+	// Choose day
 	opts.day = flag.Int("day", 0, "which days solution to run")
 
 	// Parse them

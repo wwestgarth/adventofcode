@@ -1,41 +1,48 @@
 package utils
 
 import (
+	"fmt"
 	"io/ioutil"
 	"strconv"
 	strings "strings"
 )
 
-func fileToSlice(file string) ([]string, error) {
+func sliceToInt(stringSlice []string) (asIntegers []int) {
 
-	res := []string{}
-	dat, err := ioutil.ReadFile(file)
-	if err != nil {
-		return res, err
-	}
-
-	data := strings.Split(string(dat), "\r\n")
-	return data, err
-}
-
-func sliceToInt(stringSlice []string) []int {
-
-	res := []int{}
 	for _, element := range stringSlice {
-
-		value, _ := strconv.Atoi(element)
-		res = append(res, value)
+		asIntegers = append(asIntegers, AtoiPanic(element))
 	}
-	return res
+	return
 }
 
-func ReadFileAsInts(file string) ([]int, error) {
+func FileAsLines(file string) []string {
 
-	stringSlice, err := fileToSlice(file)
-	return sliceToInt(stringSlice), err
+	stream, err := ioutil.ReadFile(file)
+	if err != nil {
+		fmt.Println("Cannot read file:", file)
+		panic(err)
+	}
+
+	return strings.Split(string(stream), "\r\n")
 }
 
-func ReadFileAsStrings(file string) ([]string, error) {
+func FileAsInts(file string) []int {
 
-	return fileToSlice(file)
+	stringSlice := FileAsLines(file)
+	return sliceToInt(stringSlice)
+}
+
+func ResultStrings(value1, value2 int) (string, string) {
+	return strconv.Itoa(value1), strconv.Itoa(value2)
+}
+
+func AtoiPanic(str string) int {
+
+	i, err := strconv.Atoi(str)
+	if err != nil {
+		fmt.Println("Cannot convert to int", str)
+		panic(err)
+	}
+
+	return i
 }
