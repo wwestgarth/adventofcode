@@ -6,23 +6,14 @@ type Vector struct {
 	Z int
 }
 
-func NewVector(x, y, z int) (v Vector) {
-	v.X = x
-	v.Y = y
-	v.Z = z
-	return v
+func NewVector(x, y, z int) Vector {
+	return Vector{x, y, z}
 }
 
-func NewZeroVector() (v Vector) {
-	v.X = 0
-	v.Y = 0
-	v.Z = 0
-	return v
+func NewZeroVector() Vector {
+	return Vector{}
 }
 
-func VecAdd(p, q Vector) (v Vector) {
-	v.X = p.X + q.X
-	v.Y = p.Y + q.Y
-	v.Z = p.Z + q.Z
-	return v
+func VecAdd(p, q Vector) Vector {
+	return Vector{p.X + q.X, p.Y + q.Y, p.Z + q.Z}
 }
