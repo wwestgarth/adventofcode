@@ -36,100 +36,43 @@ func fileAsMapData() (mapData MapData) {
 	return
 }
 
-func step1(x, y int) (int, int) {
-	return x + 3, y + 1
-}
+func treesForSlope(data MapData, slope utils.Vector) (nTrees int) {
 
-func step2(x, y int) (int, int) {
-	return x + 1, y + 1
-}
+	position := utils.NewZeroVector()
+	for {
 
-func step3(x, y int) (int, int) {
-	return x + 5, y + 1
-}
+		if data.isTreeAtPosition(position.X, position.Y) {
+			nTrees += 1
+		}
 
-func step4(x, y int) (int, int) {
-	return x + 7, y + 1
-}
+		position = utils.VecAdd(position, slope)
+		if position.Y > data.length {
+			break
+		}
+	}
 
-func step5(x, y int) (int, int) {
-	return x + 1, y + 2
+	return nTrees
+
 }
 
 func SolveDay3() (part1, part2 string) {
 
-	x := 0
-	y := 0
-	treeCount1 := 0
-	treeCount2 := 0
-	treeCount3 := 0
-	treeCount4 := 0
-	treeCount5 := 0
+	slopes := [5]utils.Vector{
+		utils.NewVector(3, 1, 0),
+		utils.NewVector(1, 1, 0),
+		utils.NewVector(5, 1, 0),
+		utils.NewVector(7, 1, 0),
+		utils.NewVector(1, 2, 0),
+	}
 
 	data := fileAsMapData()
-	for {
+	treeCount := treesForSlope(data, slopes[0])
 
-		if data.isTreeAtPosition(x, y) {
-			treeCount1 += 1
-		}
+	treeCountMulti := 1
 
-		x, y = step1(x, y)
-		if y > data.length {
-			break
-		}
-	}
-	x = 0
-	y = 0
-	for {
-
-		if data.isTreeAtPosition(x, y) {
-			treeCount2 += 1
-		}
-
-		x, y = step2(x, y)
-		if y > data.length {
-			break
-		}
-	}
-	x = 0
-	y = 0
-	for {
-
-		if data.isTreeAtPosition(x, y) {
-			treeCount3 += 1
-		}
-
-		x, y = step3(x, y)
-		if y > data.length {
-			break
-		}
-	}
-	x = 0
-	y = 0
-	for {
-
-		if data.isTreeAtPosition(x, y) {
-			treeCount4 += 1
-		}
-
-		x, y = step4(x, y)
-		if y > data.length {
-			break
-		}
-	}
-	x = 0
-	y = 0
-	for {
-
-		if data.isTreeAtPosition(x, y) {
-			treeCount5 += 1
-		}
-
-		x, y = step5(x, y)
-		if y > data.length {
-			break
-		}
+	for _, slope := range slopes {
+		treeCountMulti *= treesForSlope(data, slope)
 	}
 
-	return utils.ResultStrings(treeCount1, treeCount1*treeCount2*treeCount3*treeCount4*treeCount5)
+	return utils.ResultStrings(treeCount, treeCountMulti)
 }
