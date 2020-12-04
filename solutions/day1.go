@@ -4,7 +4,7 @@ import (
 	utils "adventofcode/utils"
 )
 
-var (
+const (
 	gSum = 2020
 )
 

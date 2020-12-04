@@ -4,6 +4,10 @@ import (
 	utils "adventofcode/utils"
 )
 
+const (
+	gTreeRepresentation = '#'
+)
+
 type MapData struct {
 	width    int
 	length   int
@@ -29,7 +33,7 @@ func fileAsMapData() (mapData MapData) {
 		mapData.treeData[yIndex] = make(map[int]bool)
 
 		for xIndex, point := range line {
-			mapData.treeData[yIndex][xIndex] = (point == '#')
+			mapData.treeData[yIndex][xIndex] = (point == gTreeRepresentation)
 		}
 	}
 
