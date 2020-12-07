@@ -4,6 +4,8 @@ import (
 	day1 "adventofcode/solutions"
 	day2 "adventofcode/solutions"
 	day3 "adventofcode/solutions"
+	day4 "adventofcode/solutions"
+	day5 "adventofcode/solutions"
 	"flag"
 	"fmt"
 )
@@ -42,7 +44,10 @@ func main() {
 		part1, part2 = day3.SolveDay3()
 	}
 	if *opts.day == 4 {
-		part1, part2 = day3.SolveDay4()
+		part1, part2 = day4.SolveDay4()
+	}
+	if *opts.day == 5 {
+		part1, part2 = day5.SolveDay5()
 	}
 	fmt.Println("Solutions")
 	fmt.Println("Part1: ", part1)
