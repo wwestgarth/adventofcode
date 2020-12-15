@@ -54,8 +54,14 @@ func main() {
 	if *opts.day == 8 {
 		part1, part2 = solutions.SolveDay8()
 	}
+	if *opts.day == 11 {
+		part1, part2 = solutions.SolveDay11()
+	}
 	if *opts.day == 12 {
 		part1, part2 = solutions.SolveDay12()
+	}
+	if *opts.day == 15 {
+		part1, part2 = solutions.SolveDay15()
 	}
 	fmt.Println("Solutions")
 	fmt.Println("Part1: ", part1)
